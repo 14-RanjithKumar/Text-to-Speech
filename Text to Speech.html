@@ -1,0 +1,121 @@
+<!doctype html><html><head><style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+.hero{
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(to right, #ed213a, #93291e); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hero h1{
+  color: white;
+  font-size: 45px;
+  font-weight: 500;
+  margin-top: -50px;
+  margin-bottom: 50px;
+}
+
+.hero h1 span{
+  color: yellow;
+}
+
+.hero textarea{
+  width: 600px;
+  height: 250px;
+  background: transparent;
+  color: white;
+  font-size: 15px;
+  border: 1px solid white;
+  outline: 0;
+  padding: 20px;
+  border-radius: 10px;
+  resize: none;
+  margin-bottom: 30px;
+}
+
+.hero textarea::placeholder{
+  color: white;
+}
+
+
+.row{
+  width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+button{
+  background: white;
+  color: #ff2963;
+  font-size: 16px;
+  padding: 10px 30px;
+  border-radius: 35px;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+button i {
+  color: #ff2963;
+  margin-right: 10px;
+}
+
+select{
+  flex:1;
+  color: black;
+  height: 50px;
+  outline: none;
+  border: none;
+  border-radius: 35px;
+  padding: 0 20px;
+  appearance: none;
+}
+
+#dropdown{
+  position: relative;
+  left: -60px;
+  cursor: pointer;
+  color: #ed213a;
+}</style></head><body><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="hero">
+	<h1>Text to Speech <span>Converter</span></h1>
+	<textarea placeholder="Write anything..."></textarea>
+	<div class="row">
+		<select></select><i id="dropdown" class="fa-solid fa-caret-down"></i>
+		<button><i class="fa-solid fa-play"></i>Listen</button>
+	</div>
+</div><script type="text/javascript">let speech = new SpeechSynthesisUtterance();
+
+let voices = [];
+
+let voiceSelect = document.querySelector("select");
+
+window.speechSynthesis.onvoiceschanged = () => {
+  voices = window.speechSynthesis.getVoices();
+  speech.voice = voices[0];
+
+  voices.forEach((voice, i) => (voiceSelect.options[i] = new Option(voice.name, i)));
+};
+
+voiceSelect.addEventListener("change",()=>{
+  speech.voice = voices[voiceSelect.value];
+})
+
+document.querySelector("button").addEventListener("click", () => {
+  speech.text = document.querySelector("textarea").value;
+  window.speechSynthesis.speak(speech);
+});</script></body><html>
